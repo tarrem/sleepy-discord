@@ -225,6 +225,9 @@ namespace SleepyDiscord {
 
 		void testFunction(std::string teststring);
 
+    //emoji functions
+    ObjectResponse<Emoji> createServerEmoji(Snowflake<Server> serverID, std::string name, std::string image, std::vector<Snowflake<Role>> roles, RequestSettings<ObjectResponse<Emoji>> settings = {});
+
 		//channel functions
 		ObjectResponse<Channel     > getChannel              (Snowflake<Channel> channelID                                                                                 , RequestSettings<ObjectResponse<Channel>> settings = {});
 		ObjectResponse<Channel     > editChannel             (Snowflake<Channel> channelID, std::string name = "", std::string topic = ""                                  , RequestSettings<ObjectResponse<Channel>> settings = {});

@@ -71,6 +71,30 @@ namespace SleepyDiscord {
 		return { request(Post, path("channels/{channel.id}/messages/bulk-delete", { channelID }), settings, JSON), EmptyRespFn() };
 	}
 
+  ObjectResponse<Emoji> BaseDiscordClient::createServerEmoji(Snowflake<Server> serverID, std::string name, std::string image, std::vector<Snowflake<Role>> roles, RequestSettings<ObjectResponse<Emoji>> settings) {
+    rapidjson::Document doc;
+    doc.SetObject();
+    auto& allocator = doc.GetAllocator();
+    rapidjson::Value nameValue;
+    if (name != "") {
+      nameValue.SetString(name.c_str(), name.length());
+      doc.AddMember("name", nameValue, allocator);
+    }
+    rapidjson::Value imageValue;
+    if (image != "") {
+      imageValue.SetString(image.c_str(), image.length());
+      doc.AddMember("image", imageValue, allocator);
+    }
+//    rapidjson::Value rolesValue(rapidjson::kArrayType);
+//    if (!roles.empty()) {
+//      for(auto role : roles) {
+//        rolesValue.PushBack(rapidjson::Value(role.string().c_str(), allocator), allocator);
+//      }
+//      doc.AddMember("roles", rolesValue, allocator);
+//    }
+    return ObjectResponse<Emoji> { request(Post, path("guilds/{guild.id}/emojis", { serverID }), settings, json::stringify(doc)) };
+  }
+
 	ObjectResponse<Channel> BaseDiscordClient::editChannel(Snowflake<Channel> channelID, std::string name, std::string topic, RequestSettings<ObjectResponse<Channel>> settings) {
 		rapidjson::Document doc;
 		doc.SetObject();
