@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "json_wrapper.h"
 #include "snowflake.h"
 #include "discord_object_interface.h"
 
@@ -13,6 +14,7 @@ namespace SleepyDiscord {
 		Attachment(const nonstd::string_view& rawJSON);
 		//Attachment(const json::Values values);
 		std::string filename;
+    std::string content_type;
 		uint64_t size = 0;
 		std::string url;
 		std::string proxy_url;
@@ -21,13 +23,14 @@ namespace SleepyDiscord {
 		//const static std::initializer_list<const char*const> fields;
 		JSONStructStart
 			std::make_tuple(
-				json::pair(&Attachment::ID       , "id"       , json::REQUIRIED_FIELD),
-				json::pair(&Attachment::filename , "filename" , json::REQUIRIED_FIELD),
-				json::pair(&Attachment::size     , "size"     , json::REQUIRIED_FIELD),
-				json::pair(&Attachment::url      , "url"      , json::REQUIRIED_FIELD),
-				json::pair(&Attachment::proxy_url, "proxy_url", json::REQUIRIED_FIELD),
-				json::pair(&Attachment::height   , "height"   , json::NULLABLE_FIELD ),
-				json::pair(&Attachment::width    , "width"    , json::NULLABLE_FIELD )
+				json::pair(&Attachment::ID          , "id"           , json::REQUIRIED_FIELD),
+				json::pair(&Attachment::filename    , "filename"     , json::REQUIRIED_FIELD),
+				json::pair(&Attachment::content_type, "content_type" , json::NULLABLE_FIELD),
+				json::pair(&Attachment::size        , "size"         , json::REQUIRIED_FIELD),
+				json::pair(&Attachment::url         , "url"          , json::REQUIRIED_FIELD),
+				json::pair(&Attachment::proxy_url   , "proxy_url"    , json::REQUIRIED_FIELD),
+				json::pair(&Attachment::height      , "height"       , json::NULLABLE_FIELD ),
+				json::pair(&Attachment::width       , "width"        , json::NULLABLE_FIELD )
 			);
 		JSONStructEnd
 	};
